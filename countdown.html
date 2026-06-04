@@ -1186,7 +1186,7 @@ function initStartButton() {
         
         // الانتقال للصفحة التالية
         setTimeout(() => {
-            window.location.href = 'countdown.html';
+            window.location.href = 'hero.html';
         }, 2000);
     });
 }
@@ -1248,17 +1248,9 @@ function pad(num) {
 }
 
 /* === countdown.js === */
-// ===== JSONBin Config =====
-const firebaseConfig = {
-  apiKey: "AIzaSyAENc3TUjTBl47xSmIfuGYjBKxBWaMOVnE",
-  authDomain: "yahya-90c6b.firebaseapp.com",
-  databaseURL: "https://yahya-90c6b-default-rtdb.firebaseio.com",
-  projectId: "yahya-90c6b",
-  storageBucket: "yahya-90c6b.firebasestorage.app",
-  messagingSenderId: "445642285585",
-  appId: "1:445642285585:web:1e3fc3f66b35962aec87b0",
-  measurementId: "G-HP5J23BW5Z"
-};
+// ===== Vercel API Config =====
+const API_URL = '/api/wishes';
+
 // ===== إعدادات العد التنازلي =====
 const BIRTHDAY = new Date('2026-11-01T00:00:00');
 
@@ -1352,117 +1344,8 @@ function initDailyMessage() {
     setTimeout(typeMessage, 500);
 }
 
-// ===== صندوق الرسائل (JSONBin — شات جماعي) =====
-async function initWishes() {
-    const wishesList = document.getElementById('wishesList');
-    const wishInput = document.getElementById('wishInput');
-    const wishBtn = document.getElementById('wishBtn');
-    
-    if (!wishesList || !wishInput || !wishBtn) return;
-    
-    await loadWishes();
-    setInterval(loadWishes, 3000);
-    
-    wishBtn.addEventListener('click', () => {
-        const text = wishInput.value.trim();
-        if (text) {
-            addWish(text);
-            wishInput.value = '';
-            createMiniConfetti(wishBtn);
-        }
-    });
-    
-    wishInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') wishBtn.click();
-    });
-}
-
-async function loadWishes() {
-    try {
-        const response = await fetch(API_URL + '/latest', {
-            headers: { 'X-Master-Key': JSONBIN_API_KEY }
-        });
-        
-        if (!response.ok) throw new Error('Failed to load');
-        
-        const data = await response.json();
-        const wishes = data.record.wishes || [];
-        
-        const wishesList = document.getElementById('wishesList');
-        if (!wishesList) return;
-        
-        if (wishesList.children.length !== wishes.length) {
-            wishesList.innerHTML = '';
-            wishes.forEach(wish => addWishToDOM(wish));
-            wishesList.scrollTop = wishesList.scrollHeight;
-        }
-        
-    } catch (e) {
-        console.log('JSONBin error:', e);
-    }
-}
-
-async function addWish(text) {
-    const wishData = {
-        text: text,
-        date: new Date().toLocaleDateString('ar-SA'),
-        time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }),
-        timestamp: new Date().toISOString()
-    };
-    
-    try {
-        const getResponse = await fetch(API_URL + '/latest', {
-            headers: { 'X-Master-Key': JSONBIN_API_KEY }
-        });
-        
-        if (!getResponse.ok) throw new Error('Failed to get');
-        
-        const data = await getResponse.json();
-        const wishes = data.record.wishes || [];
-        wishes.push(wishData);
-        
-        const putResponse = await fetch(API_URL, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Master-Key': JSONBIN_API_KEY
-            },
-            body: JSON.stringify({ wishes: wishes })
-        });
-        
-        if (!putResponse.ok) throw new Error('Failed to save');
-        
-        await loadWishes();
-        
-    } catch (e) {
-        console.error('Save error:', e);
-    }
-}
-
-function addWishToDOM(wish) {
-    const list = document.getElementById('wishesList');
-    if (!list) return;
-    
-    const item = document.createElement('div');
-    item.className = 'wish-item chat-message';
-    item.setAttribute('data-id', wish.id || wish.timestamp);
-    
-    item.innerHTML = `
-        <div class="message-content">
-            <span class="message-text">${escapeHtml(wish.text)}</span>
-            <span class="message-time">${wish.time || ''}</span>
-        </div>
-    `;
-    
-    list.appendChild(item);
-    list.scrollTop = list.scrollHeight;
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
+// ===== Firebase Chat Functions =====
+// See script at end of body
 
 // ===== عداد التفكير =====
 function initThoughtCounter() {
@@ -1577,5 +1460,81 @@ chatStyle.textContent = `
 `;
 document.head.appendChild(chatStyle);
 </script>
+
+<!-- ===== Firebase Realtime Chat ===== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  // ⚠️ غير هاي القيم من Firebase Console
+const firebaseConfig = {
+  apiKey: "AIzaSyAENc3TUjTBl47xSmIfuGYjBKxBWaMOVnE",
+  authDomain: "yahya-90c6b.firebaseapp.com",
+  databaseURL: "https://yahya-90c6b-default-rtdb.firebaseio.com",
+  projectId: "yahya-90c6b",
+  storageBucket: "yahya-90c6b.firebasestorage.app",
+  messagingSenderId: "445642285585",
+  appId: "1:445642285585:web:1e3fc3f66b35962aec87b0",
+  measurementId: "G-HP5J23BW5Z"
+};
+
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const wishesRef = ref(db, 'wishes');
+
+  // Load wishes in real-time
+  function loadWishesRealtime() {
+    const wishesList = document.getElementById('wishesList');
+    if (!wishesList) return;
+
+    onValue(wishesRef, (snapshot) => {
+      const data = snapshot.val();
+      wishesList.innerHTML = '';
+
+      if (data) {
+        const wishes = Object.values(data).sort((a, b) => a.timestamp - b.timestamp);
+        wishes.forEach(wish => addWishToDOM(wish));
+        wishesList.scrollTop = wishesList.scrollHeight;
+      }
+    });
+  }
+
+  // Add new wish
+  function addWishRealtime(text) {
+    const wishData = {
+      text: text,
+      date: new Date().toLocaleDateString('ar-SA'),
+      time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }),
+      timestamp: Date.now()
+    };
+    push(wishesRef, wishData);
+  }
+
+  // Setup event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    const wishesList = document.getElementById('wishesList');
+    const wishInput = document.getElementById('wishInput');
+    const wishBtn = document.getElementById('wishBtn');
+
+    if (wishesList) loadWishesRealtime();
+
+    if (wishBtn && wishInput) {
+      wishBtn.addEventListener('click', () => {
+        const text = wishInput.value.trim();
+        if (text) {
+          addWishRealtime(text);
+          wishInput.value = '';
+          createMiniConfetti(wishBtn);
+        }
+      });
+
+      wishInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') wishBtn.click();
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
