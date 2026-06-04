@@ -1269,10 +1269,10 @@ const dailyMessages = [
 document.addEventListener('DOMContentLoaded', () => {
     initCountdown();
     initDailyMessage();
-    initWishes();
     initThoughtCounter();
     initLilac();
     initParticles();
+    // initWishes removed - Firebase handles this now
 });
 
 // ===== العد التنازلي =====
@@ -1346,6 +1346,32 @@ function initDailyMessage() {
 
 // ===== Firebase Chat Functions =====
 // See script at end of body
+
+
+// ===== إضافة رسالة للـ DOM =====
+function addWishToDOM(wish) {
+    const list = document.getElementById('wishesList');
+    if (!list) return;
+
+    const item = document.createElement('div');
+    item.className = 'wish-item chat-message';
+    item.setAttribute('data-id', wish.id || wish.timestamp);
+
+    item.innerHTML = `
+        <div class="message-content">
+            <span class="message-text">${escapeHtml(wish.text)}</span>
+            <span class="message-time">${wish.time || ''}</span>
+        </div>
+    `;
+
+    list.appendChild(item);
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
 
 // ===== عداد التفكير =====
 function initThoughtCounter() {
@@ -1477,7 +1503,6 @@ const firebaseConfig = {
   appId: "1:445642285585:web:1e3fc3f66b35962aec87b0",
   measurementId: "G-HP5J23BW5Z"
 };
-
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
