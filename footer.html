@@ -1182,7 +1182,7 @@ function initLoveCounter() {
 function createFloatingHeart(container) {
     const heart = document.createElement('div');
     heart.className = 'counter-heart';
-    heart.textContent = ['💜', '💖', '💕', '🪻'][Math.floor(Math.random() * 4)];
+    heart.textContent = ['💜', '💖', '💕', '🌸'][Math.floor(Math.random() * 4)];
     
     heart.style.left = Math.random() * 100 + '%';
     heart.style.top = Math.random() * 100 + '%';
@@ -1274,7 +1274,7 @@ function createFlyingKiss(container) {
     const kiss = document.createElement('div');
     kiss.className = 'flying-kiss';
     
-    const emojis = ['💋', '💜', '💖', '💕', '🪻', '✨', '💗', '💓'];
+    const emojis = ['💋', '💜', '💖', '💕', '🌸', '✨', '💗', '💓'];
     kiss.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     
     const startX = 30 + Math.random() * 40;
