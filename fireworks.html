@@ -618,6 +618,7 @@ body {
 }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
     <div class="bg-animated"></div>
@@ -629,7 +630,7 @@ body {
     </div>
 
     <div class="page-container">
-        <a href="balloons.html" class="nav-back">← رجوع</a>
+        <button class="nav-back" onclick="window.parent.postMessage({action:'back'},'*')">← رجوع</button>
         
         <div class="fireworks-page">
             <h1 class="page-title">🎆 ارسم السماء بالحب</h1>
@@ -652,7 +653,7 @@ body {
             <div class="sky-colors" id="skyColors"></div>
         </div>
 
-        <a href="gift.html" class="nav-next">التالي →</a>
+        <button class="nav-next" onclick="window.parent.postMessage({action:'navigate',url:'gift.html'},'*')">التالي →</button>
     </div>
 
     <script>
@@ -1041,6 +1042,21 @@ function changeSkyColor() {
         sky.style.background = '';
     }, 2000);
 }
+
+// ===== SPA Navigation =====
+document.querySelectorAll('.nav-next').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.parent.postMessage({action: 'navigate', url: 'gift.html'}, '*');
+    });
+});
+
+document.querySelectorAll('.nav-back').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.parent.postMessage({action: 'back'}, '*');
+    });
+});
 </script>
 </body>
 </html>
