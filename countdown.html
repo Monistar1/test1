@@ -802,7 +802,7 @@ body {
     <div class="particles" id="bg-particles"></div>
 
     <div class="page-container">
-        <a href="index.html" class="nav-back">← رجوع</a>
+        <button class="nav-back" id="navBackBtn" onclick="goBack()">← رجوع</button>
         
         <div class="countdown-page">
             <h1 class="page-title">⏳ باقي على يوم ملكتي</h1>
@@ -873,7 +873,13 @@ body {
             </div>
         </div>
 
-        <a href="hero.html" class="nav-next">التالي →</a>
+        <button class="nav-next" id="navNextBtn" onclick="loadPage('hero.html')">التالي →</button>
+    </div>
+
+    <!-- iframe container for SPA navigation -->
+    <div id="pageFrameContainer" style="display:none; position:fixed; inset:0; z-index:1000; background:var(--night-bg);">
+        <iframe id="pageFrame" style="width:100%; height:100%; border:none;" src=""></iframe>
+    </div>
     </div>
 
     <script>
@@ -1354,6 +1360,33 @@ const firebaseConfig = {
       });
     }
   });
+
+// ===== SPA Navigation via iframe =====
+function loadPage(url) {
+    const container = document.getElementById('pageFrameContainer');
+    const frame = document.getElementById('pageFrame');
+    frame.src = url;
+    container.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function goBack() {
+    const container = document.getElementById('pageFrameContainer');
+    const frame = document.getElementById('pageFrame');
+    frame.src = '';
+    container.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+// Listen for messages from iframe to navigate
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.action === 'navigate') {
+        loadPage(e.data.url);
+    } else if (e.data && e.data.action === 'back') {
+        goBack();
+    }
+});
+
 </script>
 
 </body>
