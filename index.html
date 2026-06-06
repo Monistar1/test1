@@ -2,752 +2,1320 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شهد — كل الحب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600;800&display=swap" rel="stylesheet">
-<style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🔐 شهد — قفل الحب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== PIN LOCK STYLES (from pin.html) ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-/* === styles.css === */
-/* ===== Reset & Base ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        :root {
+            --lavender: #E6E6FA;
+            --lilac: #C8A2C8;
+            --lilac-glow: rgba(200,162,200,0.4);
+            --purple: #9B59B6;
+            --purple-deep: #663399;
+            --pink: #FF69B4;
+            --pink-glow: rgba(255,105,180,0.5);
+            --rose: #FF1493;
+            --gold: #FFD700;
+            --cream: #FFF0F5;
+            --night-bg: #0a0a1a;
+            --night-mid: #1a1a3e;
+            --white: #ffffff;
+        }
 
-:root {
-    --lilac-light: #E6E6FA;
-    --lilac-main: #C8A2C8;
-    --lilac-dark: #9B59B6;
-    --lilac-deep: #663399;
-    --night-bg: #0a0a1a;
-    --night-mid: #1a1a3e;
-    --gold: #FFD700;
-    --pink: #FF69B4;
-    --white: #ffffff;
-}
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #0a0a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-html {
-    scroll-behavior: smooth;
-}
+        /* خلفية متحركة */
+        .bg-animated {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(102,51,153,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255,105,180,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(155,89,182,0.15) 0%, transparent 70%),
+                linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 50%, #0f0a1a 100%);
+            animation: bgShift 8s ease-in-out infinite;
+            z-index: 0;
+        }
 
-body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--night-bg);
-    color: var(--white);
-    overflow-x: hidden;
-    min-height: 100vh;
-}
+        @keyframes bgShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(15deg); }
+        }
 
-/* ===== خلفية حية ===== */
-.live-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(180deg, #0a0a1a 0%, #1a1a3e 40%, #2d1b4e 70%, #1a1a3e 100%);
-    overflow: hidden;
-}
+        /* جسيمات لامعة */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
 
-/* نجوم */
-.stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, white, transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 90px 40px, white, transparent),
-        radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1px 1px at 230px 80px, white, transparent),
-        radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent);
-    background-size: 350px 200px;
-    animation: twinkle 5s ease-in-out infinite;
-}
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
 
-@keyframes twinkle {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 0.3; }
-}
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
 
-/* سحاب */
-.clouds {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0.15;
-}
+        /* قلوب طائرة */
+        .flying-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 24px;
+            animation: flyHeart 5s ease-in forwards;
+            z-index: 1;
+        }
 
-.clouds::before,
-.clouds::after {
-    content: '';
-    position: absolute;
-    background: radial-gradient(ellipse, rgba(200,162,200,0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: float 20s ease-in-out infinite;
-}
+        @keyframes flyHeart {
+            0% { transform: translateY(0) translateX(0) scale(0) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.9; transform: scale(1); }
+            100% { transform: translateY(-110vh) translateX(var(--drift)) scale(0.3) rotate(360deg); opacity: 0; }
+        }
 
-.clouds::before {
-    width: 400px;
-    height: 150px;
-    top: 20%;
-    left: -10%;
-    animation-delay: 0s;
-}
+        /* ===== PIN LOCK SCREEN ===== */
+        .pin-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
 
-.clouds::after {
-    width: 300px;
-    height: 120px;
-    top: 60%;
-    right: -5%;
-    animation-delay: -10s;
-}
+        .pin-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
 
-@keyframes float {
-    0%, 100% { transform: translateX(0) translateY(0); }
-    25% { transform: translateX(50px) translateY(-20px); }
-    50% { transform: translateX(100px) translateY(10px); }
-    75% { transform: translateX(30px) translateY(-10px); }
-}
+        .pin-container {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
 
-/* القمر */
-.moon {
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle at 30% 30%, #FFF8DC, #F0E68C);
-    border-radius: 50%;
-    box-shadow: 0 0 40px rgba(255,248,220,0.4), 0 0 80px rgba(255,248,220,0.2);
-    animation: moonPulse 4s ease-in-out infinite;
-}
+        /* القلب الكبير */
+        .heart-wrapper {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
+        }
 
-@keyframes moonPulse {
-    0%, 100% { box-shadow: 0 0 40px rgba(255,248,220,0.4), 0 0 80px rgba(255,248,220,0.2); }
-    50% { box-shadow: 0 0 60px rgba(255,248,220,0.6), 0 0 100px rgba(255,248,220,0.3); }
-}
+        .heart-main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform: rotate(-45deg);
+            animation: heartbeat 1.4s ease-in-out infinite;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            box-shadow: 
+                0 0 30px var(--pink-glow),
+                0 0 60px rgba(155,89,182,0.3),
+                inset 0 0 20px rgba(255,255,255,0.1);
+        }
 
-/* ===== ورد الليلك ===== */
-.lilac-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
+        .heart-main::before, .heart-main::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+        }
 
-.lilac-branch {
-    position: absolute;
-    bottom: -20px;
-    width: 200px;
-    height: 400px;
-    opacity: 0.7;
-}
+        .heart-main::before { top: -50%; left: 0; }
+        .heart-main::after { top: 0; left: 50%; }
 
-.lilac-branch.left {
-    left: -30px;
-    transform: rotate(-15deg);
-    transform-origin: bottom center;
-    animation: swayLeft 6s ease-in-out infinite;
-}
+        @keyframes heartbeat {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            14% { transform: rotate(-45deg) scale(1.08); }
+            28% { transform: rotate(-45deg) scale(1); }
+            42% { transform: rotate(-45deg) scale(1.12); }
+            70% { transform: rotate(-45deg) scale(1); }
+        }
 
-.lilac-branch.right {
-    right: -30px;
-    transform: rotate(15deg) scaleX(-1);
-    transform-origin: bottom center;
-    animation: swayRight 7s ease-in-out infinite;
-}
+        .heart-main.locked { animation: heartbeat 1.4s ease-in-out infinite, heartShake 0.5s ease-in-out; }
 
-@keyframes swayLeft {
-    0%, 100% { transform: rotate(-15deg); }
-    50% { transform: rotate(-10deg); }
-}
+        @keyframes heartShake {
+            0%, 100% { transform: rotate(-45deg) translateX(0); }
+            20% { transform: rotate(-45deg) translateX(-12px); }
+            40% { transform: rotate(-45deg) translateX(12px); }
+            60% { transform: rotate(-45deg) translateX(-8px); }
+            80% { transform: rotate(-45deg) translateX(8px); }
+        }
 
-@keyframes swayRight {
-    0%, 100% { transform: rotate(15deg) scaleX(-1); }
-    50% { transform: rotate(10deg) scaleX(-1); }
-}
+        .heart-main.unlocked {
+            animation: unlockBurst 0.8s ease-out forwards;
+        }
 
-/* أزهار الليلك */
-.lilac-flower {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(circle, var(--lilac-light) 0%, var(--lilac-main) 60%, var(--lilac-dark) 100%);
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    box-shadow: 0 0 8px rgba(200,162,200,0.6);
-    animation: bloom 3s ease-out forwards, floatFlower 8s ease-in-out infinite;
-    opacity: 0;
-}
+        @keyframes unlockBurst {
+            0% { transform: rotate(-45deg) scale(1); box-shadow: 0 0 30px var(--pink-glow); }
+            40% { transform: rotate(-45deg) scale(1.4); box-shadow: 0 0 100px var(--pink), 0 0 150px var(--purple); }
+            100% { transform: rotate(-45deg) scale(1.1); box-shadow: 0 0 50px var(--pink-glow); }
+        }
 
-@keyframes bloom {
-    0% { transform: rotate(-45deg) scale(0); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: rotate(-45deg) scale(1); opacity: 1; }
-}
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            font-size: 44px;
+            z-index: 5;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            transition: all 0.3s;
+        }
 
-@keyframes floatFlower {
-    0%, 100% { transform: rotate(-45deg) translateY(0); }
-    50% { transform: rotate(-45deg) translateY(-10px); }
-}
+        .glow-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(200,162,200,0.15);
+            border-radius: 50%;
+            animation: ringPulse 3s ease-out infinite;
+            pointer-events: none;
+        }
 
-/* بتلات متساقطة */
-.falling-petal {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-    border-radius: 50% 0 50% 50%;
-    opacity: 0.8;
-    animation: fall linear forwards;
-    pointer-events: none;
-}
+        @keyframes ringPulse {
+            0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+        }
 
-@keyframes fall {
-    0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.8; }
-    100% { transform: translateY(100vh) rotate(720deg) scale(0.3); opacity: 0; }
-}
+        .pin-title {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            color: var(--lavender);
+            text-shadow: 0 0 25px rgba(200,162,200,0.5);
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
 
-/* جزيئات عطر الليلك */
-.particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
+        .pin-subtitle {
+            font-size: 0.95rem;
+            color: var(--lilac);
+            opacity: 0.75;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
 
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--lilac-light);
-    border-radius: 50%;
-    opacity: 0;
-    animation: particleFloat 6s ease-in-out infinite;
-    box-shadow: 0 0 6px var(--lilac-main);
-}
+        /* دائرة الـ PIN */
+        .pin-circles {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            margin-bottom: 40px;
+            direction: ltr;
+        }
 
-@keyframes particleFloat {
-    0% { transform: translateY(0) scale(0); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.4; }
-    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-}
+        .pin-circle {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2.5px solid rgba(200,162,200,0.35);
+            background: transparent;
+            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
 
-/* ===== المحتوى الرئيسي ===== */
-.start-page {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-}
+        .pin-circle.filled {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            border-color: var(--pink);
+            box-shadow: 
+                0 0 20px var(--pink-glow),
+                0 0 40px rgba(155,89,182,0.3);
+            transform: scale(1.15);
+        }
 
-.intro-content {
-    text-align: center;
-    padding: 40px;
-    position: relative;
-}
+        .pin-circle.filled::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,105,180,0.3);
+            animation: circleRipple 1.5s ease-out infinite;
+        }
 
-/* العناوين */
-.main-title {
-    margin-bottom: 30px;
-}
+        @keyframes circleRipple {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
 
-.title-line {
-    display: block;
-    font-family: 'Amiri', serif;
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--white);
-    text-shadow: 0 0 20px rgba(200,162,200,0.5);
-    opacity: 0;
-    animation: fadeInUp 1s ease-out forwards;
-}
+        .pin-circle.error {
+            border-color: #ff4444;
+            background: rgba(255,68,68,0.2);
+            animation: circleError 0.5s ease-in-out;
+        }
 
-.title-line.highlight {
-    font-size: 4rem;
-    color: var(--lilac-light);
-    text-shadow: 0 0 30px rgba(200,162,200,0.8), 0 0 60px rgba(155,89,182,0.4);
-    animation-delay: 0.5s;
-}
+        @keyframes circleError {
+            0%, 100% { transform: translateX(0) scale(1); }
+            20% { transform: translateX(-10px) scale(1.1); }
+            40% { transform: translateX(10px) scale(0.9); }
+            60% { transform: translateX(-6px) scale(1.05); }
+            80% { transform: translateX(6px) scale(0.95); }
+        }
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        /* لوحة المفاتيح */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
 
-/* القلب النابض */
-.heart-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin: 30px auto;
-}
+        .key {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 1.5px solid rgba(200,162,200,0.25);
+            background: rgba(200,162,200,0.08);
+            backdrop-filter: blur(12px);
+            color: var(--lavender);
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-.heart {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--pink), #FF1493);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    animation: heartbeat 1.2s ease-in-out infinite;
-    box-shadow: 0 0 30px rgba(255,105,180,0.6);
-}
+        .key::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255,105,180,0.15), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
 
-.heart::before,
-.heart::after {
-    content: '';
-    width: 80px;
-    height: 80px;
-    background: inherit;
-    border-radius: 50%;
-    position: absolute;
-}
+        .key:hover::before, .key:active::before { opacity: 1; }
 
-.heart::before { top: -40px; left: 0; }
-.heart::after { top: 0; left: 40px; }
+        .key:hover {
+            border-color: rgba(200,162,200,0.6);
+            background: rgba(200,162,200,0.15);
+            transform: scale(1.08);
+            box-shadow: 0 0 25px rgba(200,162,200,0.2);
+        }
 
-@keyframes heartbeat {
-    0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
-    15% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.15); }
-    30% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
-    45% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.15); }
-}
+        .key:active {
+            transform: scale(0.92);
+            background: rgba(255,105,180,0.2);
+            border-color: var(--pink);
+            box-shadow: 0 0 30px var(--pink-glow);
+        }
 
-.heart-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, rgba(255,105,180,0.3), transparent);
-    border-radius: 50%;
-    animation: glow 2s ease-in-out infinite;
-}
+        .key.delete {
+            font-size: 1.3rem;
+            color: #ff6b8a;
+            border-color: rgba(255,107,138,0.3);
+        }
 
-@keyframes glow {
-    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-}
+        .key.delete:hover {
+            border-color: rgba(255,107,138,0.6);
+            background: rgba(255,107,138,0.1);
+        }
 
-/* تأثير الكتابة */
-.subtitle {
-    font-size: 1.3rem;
-    color: var(--lilac-light);
-    margin: 20px 0 40px;
-    min-height: 40px;
-    text-shadow: 0 0 10px rgba(200,162,200,0.3);
-}
+        .key.confirm {
+            background: linear-gradient(135deg, rgba(155,89,182,0.3), rgba(102,51,153,0.3));
+            border-color: rgba(200,162,200,0.4);
+            font-size: 1.4rem;
+        }
 
-/* زر البداية */
-.start-btn {
-    position: relative;
-    padding: 18px 50px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--white);
-    background: linear-gradient(135deg, var(--lilac-dark), var(--lilac-deep));
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 25px rgba(155,89,182,0.4);
-}
+        .key.confirm:hover {
+            background: linear-gradient(135deg, rgba(155,89,182,0.5), rgba(102,51,153,0.5));
+            box-shadow: 0 0 30px rgba(155,89,182,0.3);
+        }
 
-.start-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 35px rgba(155,89,182,0.6);
-}
+        .pin-error-msg {
+            color: #ff6b8a;
+            font-size: 0.9rem;
+            margin-top: 22px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-shadow: 0 0 8px rgba(255,107,138,0.3);
+            min-height: 24px;
+        }
 
-.btn-glow {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
+        .pin-error-msg.show { opacity: 1; }
 
-.start-btn:hover .btn-glow {
-    opacity: 1;
-}
+        /* ===== COUNTDOWN PAGE (hidden initially) ===== */
+        .countdown-page {
+            min-height: 100vh;
+            padding: 60px 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
 
-/* قلوب طائرة */
-.floating-hearts {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
+        .countdown-page.show {
+            display: flex;
+            opacity: 1;
+        }
 
-.floating-heart {
-    position: absolute;
-    color: var(--pink);
-    font-size: 20px;
-    opacity: 0;
-    animation: floatUp 4s ease-in forwards;
-}
+        .page-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            color: var(--lavender);
+            text-shadow: 0 0 30px rgba(200,162,200,0.5);
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-@keyframes floatUp {
-    0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 1; transform: scale(1); }
-    100% { transform: translateY(-100vh) scale(0.5) rotate(360deg); opacity: 0; }
-}
+        /* ساعة رملية */
+        .hourglass-container {
+            position: relative;
+            width: 120px;
+            height: 180px;
+            margin: 20px 0;
+        }
 
-/* ===== تصميم متجاوب ===== */
-@media (max-width: 768px) {
-    .title-line { font-size: 2rem; }
-    .title-line.highlight { font-size: 2.5rem; }
-    .moon { width: 50px; height: 50px; top: 20px; left: 20px; }
-    .lilac-branch { width: 120px; height: 250px; }
-}
-/* ===== أزرار التنقل المُحسَّنة ===== */
-.nav-back,
-.nav-next {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 14px 28px;
-    background: rgba(200, 162, 200, 0.2);
-    border: 2px solid rgba(200, 162, 200, 0.4);
-    border-radius: 50px;
-    color: var(--lilac-light);
-    text-decoration: none;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    transition: all 0.4s ease;
-    z-index: 1000;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap;
-    cursor: pointer;
-}
+        .hourglass {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(200,162,200,0.4));
+        }
 
-.nav-back {
-    left: 25px;
-}
+        .hourglass-top, .hourglass-bottom {
+            width: 100px;
+            height: 70px;
+            background: rgba(200,162,200,0.15);
+            border: 2px solid rgba(200,162,200,0.5);
+            position: absolute;
+            left: 10px;
+            overflow: hidden;
+        }
 
-.nav-next {
-    right: 25px;
-}
+        .hourglass-top {
+            top: 0;
+            border-radius: 50px 50px 10px 10px;
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+        }
 
-.nav-back:hover,
-.nav-next:hover {
-    background: rgba(200, 162, 200, 0.4);
-    border-color: rgba(200, 162, 200, 0.8);
-    color: var(--white);
-    transform: translateY(-50%) scale(1.08);
-    box-shadow: 0 8px 30px rgba(200, 162, 200, 0.5);
-}
+        .hourglass-bottom {
+            bottom: 0;
+            border-radius: 10px 10px 50px 50px;
+            clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+        }
 
-.nav-back::before {
-    content: '←';
-    font-size: 1.2rem;
-    transition: transform 0.3s;
-    display: inline-block;
-}
+        .hourglass-neck {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 20px;
+            background: rgba(200,162,200,0.3);
+            border-radius: 50%;
+        }
 
-.nav-next::after {
-    content: '→';
-    font-size: 1.2rem;
-    transition: transform 0.3s;
-    display: inline-block;
-}
+        .sand-top, .sand-bottom {
+            position: absolute;
+            width: 100%;
+            background: linear-gradient(180deg, var(--lilac), var(--purple));
+            transition: height 1s linear;
+        }
 
-.nav-back:hover::before {
-    transform: translateX(-5px);
-}
+        .sand-top {
+            bottom: 0;
+            height: 80%;
+        }
 
-.nav-next:hover::after {
-    transform: translateX(5px);
-}
+        .sand-bottom {
+            bottom: 0;
+            height: 20%;
+        }
 
-/* ===== للموبايل ===== */
-@media (max-width: 768px) {
-    .nav-back,
-    .nav-next {
-        position: fixed;
-        top: auto;
-        bottom: 20px;
-        transform: none;
-        padding: 12px 20px;
-        font-size: 0.9rem;
-        border-radius: 30px;
-    }
-    
-    .nav-back {
-        left: 15px;
-    }
-    
-    .nav-next {
-        right: 15px;
-    }
-    
-    .nav-back:hover,
-    .nav-next:hover {
-        transform: scale(1.05);
-    }
-    
-    .page-container {
-        padding-bottom: 100px;
-    }
-}
-</style>
+        .hourglass-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 200px;
+            background: radial-gradient(ellipse, rgba(200,162,200,0.2), transparent);
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* العدادات */
+        .counters-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .counter-box {
+            background: rgba(200,162,200,0.1);
+            border: 1px solid rgba(200,162,200,0.3);
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(200,162,200,0.3);
+            border-color: rgba(200,162,200,0.6);
+        }
+
+        .counter-number {
+            font-family: 'Cairo', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--lavender);
+            text-shadow: 0 0 15px rgba(200,162,200,0.6);
+            line-height: 1;
+        }
+
+        .counter-label {
+            font-size: 0.9rem;
+            color: var(--lilac);
+            margin-top: 8px;
+        }
+
+        /* الرسالة اليومية */
+        .daily-message {
+            background: rgba(200,162,200,0.1);
+            border: 1px solid rgba(200,162,200,0.3);
+            border-radius: 20px;
+            padding: 25px 30px;
+            max-width: 500px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .message-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .message-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+            color: var(--lavender);
+            line-height: 1.8;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* صندوق الأمنيات */
+        .wishes-section {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: var(--lavender);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .wishes-box {
+            background: rgba(200,162,200,0.08);
+            border: 1px solid rgba(200,162,200,0.2);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .wishes-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding-right: 10px;
+        }
+
+        .wishes-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .wishes-list::-webkit-scrollbar-thumb {
+            background: rgba(200,162,200,0.4);
+            border-radius: 3px;
+        }
+
+        .wish-item {
+            background: rgba(200,162,200,0.15);
+            border-radius: 15px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--white);
+            border-right: 3px solid var(--lilac);
+            animation: slideIn 0.5s ease-out;
+            position: relative;
+        }
+
+        .wish-item::before {
+            content: '🌸';
+            margin-left: 8px;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .wish-input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .wish-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid rgba(200,162,200,0.3);
+            border-radius: 15px;
+            background: rgba(200,162,200,0.1);
+            color: var(--white);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .wish-input:focus {
+            border-color: var(--lilac);
+            box-shadow: 0 0 15px rgba(200,162,200,0.2);
+        }
+
+        .wish-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .wish-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--purple), var(--purple-deep));
+            border: none;
+            border-radius: 15px;
+            color: var(--white);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .wish-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(155,89,182,0.4);
+        }
+
+        /* عداد التفكير */
+        .thought-counter {
+            background: rgba(200,162,200,0.1);
+            border: 1px solid rgba(200,162,200,0.3);
+            border-radius: 20px;
+            padding: 25px 30px;
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thought-icon {
+            font-size: 2.5rem;
+            animation: think 3s ease-in-out infinite;
+        }
+
+        @keyframes think {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .thought-content {
+            flex: 1;
+        }
+
+        .thought-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--lilac);
+            margin-bottom: 5px;
+        }
+
+        .thought-number {
+            font-family: 'Cairo', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--lavender);
+            text-shadow: 0 0 15px rgba(200,162,200,0.6);
+        }
+
+        .thought-unit {
+            font-size: 0.9rem;
+            color: var(--lilac);
+            margin-right: 5px;
+        }
+
+        .thought-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(200,162,200,0.2);
+            border-radius: 0 0 20px 20px;
+        }
+
+        .thought-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--lilac), var(--lavender));
+            border-radius: 0 0 20px 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* أزرار التنقل */
+        .nav-back, .nav-next {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 14px 28px;
+            background: rgba(200, 162, 200, 0.2);
+            border: 2px solid rgba(200, 162, 200, 0.4);
+            border-radius: 50px;
+            color: var(--lavender);
+            text-decoration: none;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .nav-back { left: 25px; }
+        .nav-next { right: 25px; }
+
+        .nav-back:hover, .nav-next:hover {
+            background: rgba(200, 162, 200, 0.4);
+            border-color: rgba(200, 162, 200, 0.8);
+            color: var(--white);
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: 0 8px 30px rgba(200, 162, 200, 0.5);
+        }
+
+        .nav-back::before {
+            content: '←';
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        .nav-next::after {
+            content: '→';
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        .nav-back:hover::before { transform: translateX(-5px); }
+        .nav-next:hover::after { transform: translateX(5px); }
+
+        /* Confetti */
+        .confetti-piece {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1001;
+            animation: confettiDrop linear forwards;
+        }
+
+        @keyframes confettiDrop {
+            0% { transform: translateY(-50px) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+        }
+
+        /* متجاوب */
+        @media (max-width: 768px) {
+            .counters-grid { grid-template-columns: repeat(2, 1fr); }
+            .counter-number { font-size: 1.8rem; }
+            .nav-back, .nav-next {
+                position: fixed;
+                top: auto;
+                bottom: 20px;
+                transform: none;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            .nav-back { left: 15px; }
+            .nav-next { right: 15px; }
+            .nav-back:hover, .nav-next:hover { transform: scale(1.05); }
+            .page-title { font-size: 1.8rem; }
+            .pin-title { font-size: 1.6rem; }
+            .key { font-size: 1.4rem; }
+            .keypad { gap: 10px; }
+            .heart-wrapper { width: 110px; height: 110px; }
+            .lock-icon { font-size: 36px; }
+        }
+
+        @media (max-width: 380px) {
+            .heart-wrapper { width: 100px; height: 100px; }
+            .key { font-size: 1.3rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- خلفية حية -->
-    <div class="live-background">
-        <div class="stars"></div>
-        <div class="clouds"></div>
-        <div class="lilac-container" id="lilacContainer"></div>
-        <div class="particles" id="particles"></div>
-    </div>
+    <!-- خلفية متحركة -->
+    <div class="bg-animated"></div>
+    <div class="particles" id="particles"></div>
 
-    <!-- صفحة البداية -->
-    <div class="start-page">
-        <div class="moon"></div>
-        
-        <div class="intro-content">
-            <div class="lilac-branch left"></div>
-            <div class="lilac-branch right"></div>
-            
-            <h1 class="main-title">
-                <span class="title-line">إلى من ملكت</span>
-                <span class="title-line highlight">قلبي كله</span>
-            </h1>
-            
-            <div class="heart-container">
-                <div class="heart"></div>
-                <div class="heart-glow"></div>
+    <!-- ===== PIN LOCK SCREEN ===== -->
+    <div class="pin-screen" id="pinScreen">
+        <div class="pin-container">
+            <div class="heart-wrapper">
+                <div class="glow-ring"></div>
+                <div class="heart-main" id="heartMain">
+                    <div class="lock-icon" id="lockIcon">🔒</div>
+                </div>
             </div>
-            
-            <p class="subtitle typewriter" id="typewriterText"></p>
-            
-            <button class="start-btn" id="startBtn">
-                <span class="btn-text">✨ ابدأ رحلتنا</span>
-                <div class="btn-glow"></div>
-            </button>
-            
-            <div class="floating-hearts" id="floatingHearts"></div>
+
+            <h1 class="pin-title">🔐 قفل الحب</h1>
+            <p class="pin-subtitle">أدخلي رمزنا السري يا شهد 💜</p>
+
+            <div class="pin-circles" id="pinCircles">
+                <div class="pin-circle" data-i="0"></div>
+                <div class="pin-circle" data-i="1"></div>
+                <div class="pin-circle" data-i="2"></div>
+                <div class="pin-circle" data-i="3"></div>
+            </div>
+
+            <div class="keypad" id="keypad">
+                <button class="key" data-n="1">1</button>
+                <button class="key" data-n="2">2</button>
+                <button class="key" data-n="3">3</button>
+                <button class="key" data-n="4">4</button>
+                <button class="key" data-n="5">5</button>
+                <button class="key" data-n="6">6</button>
+                <button class="key" data-n="7">7</button>
+                <button class="key" data-n="8">8</button>
+                <button class="key" data-n="9">9</button>
+                <button class="key delete" data-a="del">⌫</button>
+                <button class="key" data-n="0">0</button>
+                <button class="key confirm" data-a="ok">✨</button>
+            </div>
+
+            <div class="pin-error-msg" id="pinErrorMsg">الرمز غير صحيح 💔 جربي تاني</div>
         </div>
     </div>
 
-    <!-- تحميل الصوت -->
-    <audio id="bgMusic" loop>
-        <source src="assets/bdaya.mp3" type="audio/mpeg">
-    </audio>
+    <!-- ===== COUNTDOWN PAGE (hidden until unlocked) ===== -->
+    <div class="countdown-page" id="countdownPage">
+        <h1 class="page-title">⏳ باقي على يوم ملكتي</h1>
+
+        <!-- ساعة رملية -->
+        <div class="hourglass-container">
+            <div class="hourglass">
+                <div class="hourglass-top">
+                    <div class="sand-top" id="sandTop"></div>
+                </div>
+                <div class="hourglass-neck"></div>
+                <div class="hourglass-bottom">
+                    <div class="sand-bottom" id="sandBottom"></div>
+                </div>
+            </div>
+            <div class="hourglass-glow"></div>
+        </div>
+
+        <!-- العدادات -->
+        <div class="counters-grid">
+            <div class="counter-box">
+                <div class="counter-number" id="days">00</div>
+                <div class="counter-label">يوم</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-number" id="hours">00</div>
+                <div class="counter-label">ساعة</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-number" id="minutes">00</div>
+                <div class="counter-label">دقيقة</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-number" id="seconds">00</div>
+                <div class="counter-label">ثانية</div>
+            </div>
+        </div>
+
+        <!-- رسالة يومية -->
+        <div class="daily-message" id="dailyMessage">
+            <div class="message-icon">💌</div>
+            <p class="message-text" id="messageText"></p>
+        </div>
+
+        <!-- صندوق الأمنيات -->
+        <div class="wishes-section">
+            <h3 class="section-title">✨ صندوق رسائل شودي</h3>
+            <div class="wishes-box" id="wishesBox">
+                <div class="wishes-list" id="wishesList"></div>
+                <div class="wish-input-area">
+                    <input type="text" class="wish-input" id="wishInput" placeholder="اكتب رسالة شودي..." maxlength="100">
+                    <button class="wish-btn" id="wishBtn">🌟 أرسل</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- عداد التفكير -->
+        <div class="thought-counter">
+            <div class="thought-icon">💭</div>
+            <div class="thought-content">
+                <span class="thought-label">فكرت فيكِ اليوم</span>
+                <span class="thought-number" id="thoughtCount">0</span>
+                <span class="thought-unit">مرة</span>
+            </div>
+            <div class="thought-bar">
+                <div class="thought-fill" id="thoughtFill"></div>
+            </div>
+        </div>
+
+        <!-- زر التالي -->
+        <a href="hero.html" class="nav-next">التالي →</a>
+    </div>
 
     <script>
+        // ===== PIN LOCK LOGIC =====
+        const CORRECT_PIN = '1234'; // ← غيري الرمز هون
+        let pin = '';
+        let locked = true;
 
-/* === main.js === */
-// ===== متغيرات عامة =====
-let audioContext = null;
-let bgMusic = null;
+        const heart = document.getElementById('heartMain');
+        const lockIcon = document.getElementById('lockIcon');
+        const circles = document.querySelectorAll('.pin-circle');
+        const pinErrorMsg = document.getElementById('pinErrorMsg');
+        const pinScreen = document.getElementById('pinScreen');
+        const countdownPage = document.getElementById('countdownPage');
 
-// ===== عند تحميل الصفحة =====
-document.addEventListener('DOMContentLoaded', () => {
-    initLilac();
-    initParticles();
-    initTypewriter();
-    initStartButton();
-    createFallingPetals();
-});
+        // جسيمات الخلفية
+        function initParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['#C8A2C8', '#FF69B4', '#FFD700', '#E6E6FA'];
 
-// ===== ورد الليلك =====
-function initLilac() {
-    const container = document.getElementById('lilacContainer');
-    
-    // إنشاء أزهار على الأغصان
-    const branches = document.querySelectorAll('.lilac-branch');
-    
-    branches.forEach(branch => {
-        for (let i = 0; i < 25; i++) {
-            const flower = document.createElement('div');
-            flower.className = 'lilac-flower';
-            
-            // موقع عشوائي على الغصن
-            const top = 20 + Math.random() * 70;
-            const left = 30 + Math.random() * 40;
-            const delay = Math.random() * 3;
-            const size = 8 + Math.random() * 8;
-            
-            flower.style.cssText = `
-                top: ${top}%;
-                left: ${left}%;
-                width: ${size}px;
-                height: ${size}px;
-                animation-delay: ${delay}s;
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 4 + 1;
+                p.style.cssText = `
+                    width: ${size}px; height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    animation-duration: ${6 + Math.random() * 10}s;
+                    animation-delay: ${Math.random() * 5}s;
+                    opacity: ${0.3 + Math.random() * 0.5};
+                `;
+                container.appendChild(p);
+            }
+        }
+
+        // قلوب طائرة
+        function spawnHeart() {
+            const h = document.createElement('div');
+            h.className = 'flying-heart';
+            h.textContent = ['💜','💖','💕','💗','💝','💘'][Math.floor(Math.random()*6)];
+            h.style.cssText = `
+                left: ${10 + Math.random() * 80};
+                bottom: -30px;
+                --drift: ${(Math.random() - 0.5) * 100}px;
+                animation-duration: ${4 + Math.random() * 3}s;
             `;
-            
-            branch.appendChild(flower);
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 7000);
         }
-    });
-}
+        setInterval(spawnHeart, 2500);
 
-// ===== بتلات متساقطة =====
-function createFallingPetals() {
-    setInterval(() => {
-        const petal = document.createElement('div');
-        petal.className = 'falling-petal';
-        
-        const startX = Math.random() * window.innerWidth;
-        const duration = 5 + Math.random() * 5;
-        const size = 6 + Math.random() * 6;
-        
-        petal.style.cssText = `
-            left: ${startX}px;
-            top: -20px;
-            width: ${size}px;
-            height: ${size}px;
-            animation-duration: ${duration}s;
-        `;
-        
-        document.querySelector('.live-background').appendChild(petal);
-        
-        setTimeout(() => petal.remove(), duration * 1000);
-    }, 1500);
-}
+        // تحديث الدوائر
+        function updateCircles() {
+            circles.forEach((c, i) => {
+                c.classList.remove('filled', 'error');
+                if (i < pin.length) c.classList.add('filled');
+            });
+        }
 
-// ===== جزيئات العطر =====
-function initParticles() {
-    const container = document.getElementById('particles');
-    
-    setInterval(() => {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        const x = Math.random() * window.innerWidth;
-        const y = window.innerHeight - Math.random() * 200;
-        const delay = Math.random() * 2;
-        
-        particle.style.cssText = `
-            left: ${x}px;
-            top: ${y}px;
-            animation-delay: ${delay}s;
-        `;
-        
-        container.appendChild(particle);
-        
-        setTimeout(() => particle.remove(), 6000);
-    }, 800);
-}
+        // خطأ
+        function showPinError() {
+            circles.forEach(c => c.classList.add('error'));
+            pinErrorMsg.classList.add('show');
+            heart.classList.add('locked');
 
-// ===== تأثير الكتابة =====
-function initTypewriter() {
-    const text = "في كل نبضة قلب... أنتِ";
-    const element = document.getElementById('typewriterText');
-    let index = 0;
-    
-    function type() {
-        if (index < text.length) {
-            element.textContent += text.charAt(index);
-            index++;
-            setTimeout(type, 150);
-        } else {
             setTimeout(() => {
-                element.textContent = '';
-                index = 0;
-                type();
-            }, 4000);
+                circles.forEach(c => c.classList.remove('error'));
+                pinErrorMsg.classList.remove('show');
+                heart.classList.remove('locked');
+            }, 1400);
         }
-    }
-    
-    setTimeout(type, 1500);
-}
 
-// ===== زر البداية =====
-function initStartButton() {
-    const btn = document.getElementById('startBtn');
-    
-    btn.addEventListener('click', async () => {
-        // تشغيل الموسيقى
-        await initAudio();
-        
-        // تأثير القلوب الطائرة
-        createBurstHearts();
-        
-        // الانتقال للصفحة التالية
-        setTimeout(() => {
-            window.location.href = 'countdown.html';
-        }, 2000);
-    });
-}
+        // Confetti
+        function burstConfetti() {
+            const colors = ['#C8A2C8','#FF69B4','#FFD700','#E6E6FA','#FF1493','#9B59B6'];
+            const shapes = ['50%', '0', '50% 0 50% 50%'];
 
-// ===== تشغيل الصوت =====
-async function initAudio() {
-    bgMusic = document.getElementById('bgMusic');
-    
-    try {
-        await bgMusic.play();
-        bgMusic.volume = 0.3;
-    } catch (e) {
-        console.log('Audio autoplay blocked:', e);
-    }
-}
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    const c = document.createElement('div');
+                    c.className = 'confetti-piece';
+                    const size = 6 + Math.random() * 10;
+                    c.style.cssText = `
+                        left: ${Math.random() * 100}%;
+                        top: -20px;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: ${colors[Math.floor(Math.random()*colors.length)]};
+                        border-radius: ${shapes[Math.floor(Math.random()*shapes.length)]};
+                        animation-duration: ${2 + Math.random() * 2}s;
+                    `;
+                    document.body.appendChild(c);
+                    setTimeout(() => c.remove(), 4000);
+                }, i * 25);
+            }
+        }
 
-// ===== انفجار قلوب =====
-function createBurstHearts() {
-    const container = document.getElementById('floatingHearts');
-    const colors = ['💜', '💖', '💕', '💗', '🌸', '✨'];
-    
-    for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'floating-heart';
-        heart.textContent = colors[Math.floor(Math.random() * colors.length)];
-        
-        const x = 30 + Math.random() * 40;
-        const delay = Math.random() * 1;
-        
-        heart.style.cssText = `
-            left: ${x}%;
-            bottom: 20%;
-            animation-delay: ${delay}s;
-            font-size: ${15 + Math.random() * 20}px;
-        `;
-        
-        container.appendChild(heart);
-        
-        setTimeout(() => heart.remove(), 5000);
-    }
-}
+        // فتح القفل وإظهار العد التنازلي
+        function doUnlock() {
+            locked = false;
+            heart.classList.add('unlocked');
+            lockIcon.textContent = '🔓';
+            burstConfetti();
 
-// ===== أداة مساعدة: عداد الوقت =====
-function getTimeSince(date) {
-    const now = new Date();
-    const diff = now - new Date(date);
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    return { days, hours, minutes, seconds };
-}
+            // إخفاء شاشة PIN وإظهار العد التنازلي
+            setTimeout(() => {
+                pinScreen.classList.add('hidden');
+                countdownPage.classList.add('show');
 
-// ===== أداة مساعدة: تنسيق الأرقام =====
-function pad(num) {
-    return num.toString().padStart(2, '0');
-}
-</script>
+                // بدء العد التنازلي والميزات
+                initCountdown();
+                initDailyMessage();
+                initThoughtCounter();
+            }, 1000);
+        }
+
+        // تحقق
+        function checkPin() {
+            if (pin === CORRECT_PIN) {
+                doUnlock();
+            } else {
+                showPinError();
+                pin = '';
+                updateCircles();
+            }
+        }
+
+        // أحداث اللوحة
+        document.getElementById('keypad').addEventListener('click', e => {
+            const k = e.target.closest('.key');
+            if (!k || !locked) return;
+
+            const n = k.dataset.n;
+            const a = k.dataset.a;
+
+            if (n !== undefined && pin.length < 4) {
+                pin += n;
+                updateCircles();
+                if (pin.length === 4) setTimeout(checkPin, 250);
+            } else if (a === 'del') {
+                pin = pin.slice(0, -1);
+                updateCircles();
+                pinErrorMsg.classList.remove('show');
+            } else if (a === 'ok' && pin.length === 4) {
+                checkPin();
+            }
+        });
+
+        // كيبورد
+        document.addEventListener('keydown', e => {
+            if (!locked) return;
+
+            if (e.key >= '0' && e.key <= '9') {
+                if (pin.length < 4) {
+                    pin += e.key;
+                    updateCircles();
+                    if (pin.length === 4) setTimeout(checkPin, 250);
+                }
+            } else if (e.key === 'Backspace') {
+                pin = pin.slice(0, -1);
+                updateCircles();
+                pinErrorMsg.classList.remove('show');
+            } else if (e.key === 'Enter' && pin.length === 4) {
+                checkPin();
+            }
+        });
+
+        // ===== COUNTDOWN LOGIC =====
+        const BIRTHDAY = new Date('2026-11-01T00:00:00');
+
+        const dailyMessages = [
+            "باقي أيام قليلة ونحتفل بأجمل يوم في حياتي",
+            "كل يوم يمر يزيد شوقي ليوم ميلادك",
+            "أنتِ أجمل هدية حصلت عليها في حياتي",
+            "يوم ميلادك = بداية سنة جديدة من السعادة",
+            "لا يوجد شيء أجمل من الاحتفال بكِ",
+            "قلبي يخفق بسرعة كلما اقترب موعد فرحتنا",
+            "أعدكِ بأجمل يوم ميلاد في حياتكِ",
+            "أنتِ تستحقين كل الحب في هذا العالم"
+        ];
+
+        function initCountdown() {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = BIRTHDAY - now;
+
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                document.querySelector('.page-title').textContent = '🎉 اليوم هو يومكِ يا ملكتي!';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = pad(days);
+            document.getElementById('hours').textContent = pad(hours);
+            document.getElementById('minutes').textContent = pad(minutes);
+            document.getElementById('seconds').textContent = pad(seconds);
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const maxSeconds = 30 * 24 * 60 * 60;
+            const percentage = Math.max(0, Math.min(100, (totalSeconds / maxSeconds) * 100));
+
+            const sandTop = document.getElementById('sandTop');
+            const sandBottom = document.getElementById('sandBottom');
+
+            if (sandTop && sandBottom) {
+                sandTop.style.height = percentage + '%';
+                sandBottom.style.height = (100 - percentage) + '%';
+            }
+        }
+
+        function initDailyMessage() {
+            const dayIndex = new Date().getDate() % dailyMessages.length;
+            const message = dailyMessages[dayIndex];
+
+            const textElement = document.getElementById('messageText');
+            if (!textElement) return;
+
+            let index = 0;
+            textElement.textContent = '';
+
+            function typeMessage() {
+                if (index < message.length) {
+                    textElement.textContent += message.charAt(index);
+                    index++;
+                    setTimeout(typeMessage, 80);
+                }
+            }
+
+            setTimeout(typeMessage, 500);
+        }
+
+        function initThoughtCounter() {
+            const counter = document.getElementById('thoughtCount');
+            const fill = document.getElementById('thoughtFill');
+
+            if (!counter) return;
+
+            let count = Math.floor(Math.random() * 400) + 100;
+            updateThoughtDisplay(count);
+
+            setInterval(() => {
+                count++;
+                updateThoughtDisplay(count);
+            }, 3000);
+        }
+
+        function updateThoughtDisplay(count) {
+            const counter = document.getElementById('thoughtCount');
+            const fill = document.getElementById('thoughtFill');
+
+            if (counter) counter.textContent = count.toLocaleString('ar-SA');
+            if (fill) fill.style.width = Math.min(100, (count % 100)) + '%';
+        }
+
+        function pad(num) {
+            return num.toString().padStart(2, '0');
+        }
+
+        // ===== FIREBASE CHAT =====
+        function addWishToDOM(wish) {
+            const list = document.getElementById('wishesList');
+            if (!list) return;
+
+            const item = document.createElement('div');
+            item.className = 'wish-item';
+            item.innerHTML = `
+                <span class="message-text">${escapeHtml(wish.text)}</span>
+                <span class="message-time">${wish.time || ''}</span>
+            `;
+            list.appendChild(item);
+            list.scrollTop = list.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ===== بدء =====
+        initParticles();
+    </script>
+
+    <!-- ===== Firebase Realtime Chat ===== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAENc3TUjTBl47xSmIfuGYjBKxBWaMOVnE",
+            authDomain: "yahya-90c6b.firebaseapp.com",
+            databaseURL: "https://yahya-90c6b-default-rtdb.firebaseio.com",
+            projectId: "yahya-90c6b",
+            storageBucket: "yahya-90c6b.firebasestorage.app",
+            messagingSenderId: "445642285585",
+            appId: "1:445642285585:web:1e3fc3f66b35962aec87b0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const wishesRef = ref(db, 'wishes');
+
+        function loadWishesRealtime() {
+            const wishesList = document.getElementById('wishesList');
+            if (!wishesList) return;
+
+            onValue(wishesRef, (snapshot) => {
+                const data = snapshot.val();
+                wishesList.innerHTML = '';
+
+                if (data) {
+                    const wishes = Object.values(data).sort((a, b) => a.timestamp - b.timestamp);
+                    wishes.forEach(wish => {
+                        const item = document.createElement('div');
+                        item.className = 'wish-item';
+                        item.innerHTML = `
+                            <span style="flex:1;word-break:break-word;">${wish.text}</span>
+                            <span style="font-size:0.7rem;color:rgba(200,162,200,0.6);white-space:nowrap;">${wish.time || ''}</span>
+                        `;
+                        wishesList.appendChild(item);
+                    });
+                    wishesList.scrollTop = wishesList.scrollHeight;
+                }
+            });
+        }
+
+        function addWishRealtime(text) {
+            const wishData = {
+                text: text,
+                date: new Date().toLocaleDateString('ar-SA'),
+                time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }),
+                timestamp: Date.now()
+            };
+            push(wishesRef, wishData);
+        }
+
+        // Setup event listeners when countdown page is shown
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.classList.contains('show')) {
+                    const wishesList = document.getElementById('wishesList');
+                    const wishInput = document.getElementById('wishInput');
+                    const wishBtn = document.getElementById('wishBtn');
+
+                    if (wishesList) loadWishesRealtime();
+
+                    if (wishBtn && wishInput) {
+                        wishBtn.addEventListener('click', () => {
+                            const text = wishInput.value.trim();
+                            if (text) {
+                                addWishRealtime(text);
+                                wishInput.value = '';
+                            }
+                        });
+
+                        wishInput.addEventListener('keypress', (e) => {
+                            if (e.key === 'Enter') wishBtn.click();
+                        });
+                    }
+
+                    observer.disconnect();
+                }
+            });
+        });
+
+        observer.observe(document.getElementById('countdownPage'), { attributes: true });
+    </script>
 </body>
 </html>
