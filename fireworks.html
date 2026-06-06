@@ -39,7 +39,24 @@ body {
     min-height: 100vh;
 }
 
-/* ===== خلفية حية ===== */
+/* ===== خلفية ===== */
+.bg-animated {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 20% 80%, rgba(102,51,153,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255,105,180,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(155,89,182,0.15) 0%, transparent 70%),
+        linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 50%, #0f0a1a 100%);
+    animation: bgShift 8s ease-in-out infinite;
+    z-index: -2;
+}
+@keyframes bgShift { 0%, 100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(15deg); } }
+
+/* ===== خلفية حية (حاوية) ===== */
 .live-background {
     position: fixed;
     top: 0;
@@ -47,8 +64,8 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: linear-gradient(180deg, #0a0a1a 0%, #1a1a3e 40%, #2d1b4e 70%, #1a1a3e 100%);
     overflow: hidden;
+    pointer-events: none;
 }
 
 /* نجوم */
@@ -600,8 +617,10 @@ body {
     }
 }
 </style>
+<base target="_blank">
 </head>
 <body>
+    <div class="bg-animated"></div>
     <div class="live-background">
         <div class="stars"></div>
         <div class="clouds"></div>
