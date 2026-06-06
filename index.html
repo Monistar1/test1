@@ -644,7 +644,7 @@ body{
 
 <!-- ===== الشاشة 1: العد التنازلي + شات + جملة ===== -->
 <div class="screen-1" id="screen1">
-  <h1 class="page-title">⏳ باقي على يوم ملكتي</h1>
+  <h1 class="page-title">⏳ باقي على يوم أميرتي</h1>
 
   <!-- ساعة رملية محسنة -->
   <div class="hourglass-wrap">
@@ -676,7 +676,7 @@ body{
     <div class="wishes-box">
       <div class="wishes-list" id="wishesList"></div>
       <div class="wish-input-area">
-        <input type="text" class="wish-input" id="wishInput" placeholder="اكتب رسالة شودي..." maxlength="100">
+        <input type="text" class="wish-input" id="wishInput" placeholder="اكتب رسالة لشودي..." maxlength="100">
         <button class="wish-btn" id="wishBtn">🌟 أرسل</button>
       </div>
     </div>
@@ -706,7 +706,7 @@ body{
     </div>
 
     <h1 class="pin-title">🔐 قفل الحب</h1>
-    <p class="pin-sub">أدخلي رمزنا السري يا شهد 💜</p>
+    <p class="pin-sub">أدخلي رمزنا السري يا شودي 💜</p>
 
     <div class="pin-circles" id="pinCircles">
       <div class="pin-dot" data-i="0"></div>
@@ -716,15 +716,15 @@ body{
     </div>
 
     <div class="keypad" id="keypad">
-      <button class="key" data-n="1">1</button>
-      <button class="key" data-n="2">2</button>
       <button class="key" data-n="3">3</button>
-      <button class="key" data-n="4">4</button>
-      <button class="key" data-n="5">5</button>
+      <button class="key" data-n="2">2</button>
+      <button class="key" data-n="1">1</button>
       <button class="key" data-n="6">6</button>
-      <button class="key" data-n="7">7</button>
-      <button class="key" data-n="8">8</button>
+      <button class="key" data-n="5">5</button>
+      <button class="key" data-n="4">4</button>
       <button class="key" data-n="9">9</button>
+      <button class="key" data-n="8">8</button>
+      <button class="key" data-n="7">7</button>
       <button class="key del" data-a="del">⌫</button>
       <button class="key" data-n="0">0</button>
       <button class="key ok" data-a="ok">✨</button>
@@ -780,7 +780,7 @@ function updateCountdown(){
     document.getElementById('hours').textContent='00';
     document.getElementById('minutes').textContent='00';
     document.getElementById('seconds').textContent='00';
-    document.querySelector('.page-title').textContent='🎉 اليوم هو يومكِ يا ملكتي!';
+    document.querySelector('.page-title').textContent='🎉 اليوم هو يومكِ يا أميرتي!';
     return;
   }
   const d=Math.floor(diff/(1000*60*60*24));
