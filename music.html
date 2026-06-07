@@ -39,205 +39,60 @@ body {
     min-height: 100vh;
 }
 
-/* ===== خلفية حية ===== */
-.live-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(180deg, #0a0a1a 0%, #1a1a3e 40%, #2d1b4e 70%, #1a1a3e 100%);
-    overflow: hidden;
+.bg-animated{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 20% 80%,rgba(102,51,153,0.3) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 20%,rgba(255,105,180,0.2) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(155,89,182,0.15) 0%,transparent 70%),
+    linear-gradient(180deg,#0a0a1a 0%,#1a0a2e 50%,#0f0a1a 100%);
+  animation:bgShift 8s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes bgShift{0%,100%{filter:hue-rotate(0deg)}50%{filter:hue-rotate(15deg)}}
+
+.particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:1;
+}
+.particle{
+  position:absolute;
+  border-radius:50%;
+  animation:floatParticle linear infinite;
+  background: rgba(200, 162, 200, 0.4);
+  width: 6px;
+  height: 6px;
+}
+@keyframes floatParticle{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(-100px) scale(1);opacity:0}
 }
 
-/* نجوم */
-.stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, white, transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 90px 40px, white, transparent),
-        radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1px 1px at 230px 80px, white, transparent),
-        radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent);
-    background-size: 350px 200px;
-    animation: twinkle 5s ease-in-out infinite;
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 0.3; }
-}
-
-/* سحاب */
-.clouds {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0.15;
-}
-
-.clouds::before,
-.clouds::after {
-    content: '';
-    position: absolute;
-    background: radial-gradient(ellipse, rgba(200,162,200,0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: float 20s ease-in-out infinite;
-}
-
-.clouds::before {
-    width: 400px;
-    height: 150px;
-    top: 20%;
-    left: -10%;
-    animation-delay: 0s;
-}
-
-.clouds::after {
-    width: 300px;
-    height: 120px;
-    top: 60%;
-    right: -5%;
-    animation-delay: -10s;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateX(0) translateY(0); }
-    25% { transform: translateX(50px) translateY(-20px); }
-    50% { transform: translateX(100px) translateY(10px); }
-    75% { transform: translateX(30px) translateY(-10px); }
-}
-
-/* القمر */
-.moon {
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle at 30% 30%, #FFF8DC, #F0E68C);
-    border-radius: 50%;
-    box-shadow: 0 0 40px rgba(255,248,220,0.4), 0 0 80px rgba(255,248,220,0.2);
-    animation: moonPulse 4s ease-in-out infinite;
-}
-
-@keyframes moonPulse {
-    0%, 100% { box-shadow: 0 0 40px rgba(255,248,220,0.4), 0 0 80px rgba(255,248,220,0.2); }
-    50% { box-shadow: 0 0 60px rgba(255,248,220,0.6), 0 0 100px rgba(255,248,220,0.3); }
-}
-
-/* ===== ورد الليلك ===== */
-.lilac-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.lilac-branch {
-    position: absolute;
-    bottom: -20px;
-    width: 200px;
-    height: 400px;
-    opacity: 0.7;
-}
-
-.lilac-branch.left {
-    left: -30px;
-    transform: rotate(-15deg);
-    transform-origin: bottom center;
-    animation: swayLeft 6s ease-in-out infinite;
-}
-
-.lilac-branch.right {
-    right: -30px;
-    transform: rotate(15deg) scaleX(-1);
-    transform-origin: bottom center;
-    animation: swayRight 7s ease-in-out infinite;
-}
-
-@keyframes swayLeft {
-    0%, 100% { transform: rotate(-15deg); }
-    50% { transform: rotate(-10deg); }
-}
-
-@keyframes swayRight {
-    0%, 100% { transform: rotate(15deg) scaleX(-1); }
-    50% { transform: rotate(10deg) scaleX(-1); }
-}
-
-/* أزهار الليلك */
-.lilac-flower {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(circle, var(--lilac-light) 0%, var(--lilac-main) 60%, var(--lilac-dark) 100%);
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    box-shadow: 0 0 8px rgba(200,162,200,0.6);
-    animation: bloom 3s ease-out forwards, floatFlower 8s ease-in-out infinite;
-    opacity: 0;
-}
-
-@keyframes bloom {
-    0% { transform: rotate(-45deg) scale(0); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: rotate(-45deg) scale(1); opacity: 1; }
-}
-
-@keyframes floatFlower {
-    0%, 100% { transform: rotate(-45deg) translateY(0); }
-    50% { transform: rotate(-45deg) translateY(-10px); }
-}
-
-/* بتلات متساقطة */
-.falling-petal {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-    border-radius: 50% 0 50% 50%;
-    opacity: 0.8;
-    animation: fall linear forwards;
-    pointer-events: none;
-}
-
-@keyframes fall {
-    0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.8; }
-    100% { transform: translateY(100vh) rotate(720deg) scale(0.3); opacity: 0; }
-}
-
-/* جزيئات عطر الليلك */
-.particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--lilac-light);
-    border-radius: 50%;
-    opacity: 0;
-    animation: particleFloat 6s ease-in-out infinite;
-    box-shadow: 0 0 6px var(--lilac-main);
-}
-
-@keyframes particleFloat {
-    0% { transform: translateY(0) scale(0); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.4; }
-    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+/* ===== عنوان الصفحة ===== */
+.page-title {
+    font-family: 'Amiri', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--lilac-light);
+    text-shadow: 0 0 30px rgba(200,162,200,0.8), 0 0 60px rgba(155,89,182,0.4);
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease-out forwards;
 }
 
 /* ===== المحتوى الرئيسي ===== */
+.page-container {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+}
+
 .start-page {
     min-height: 100vh;
     display: flex;
@@ -409,13 +264,6 @@ body {
     100% { transform: translateY(-100vh) scale(0.5) rotate(360deg); opacity: 0; }
 }
 
-/* ===== تصميم متجاوب ===== */
-@media (max-width: 768px) {
-    .title-line { font-size: 2rem; }
-    .title-line.highlight { font-size: 2.5rem; }
-    .moon { width: 50px; height: 50px; top: 20px; left: 20px; }
-    .lilac-branch { width: 120px; height: 250px; }
-}
 /* ===== أزرار التنقل المُحسَّنة ===== */
 .nav-back,
 .nav-next {
@@ -494,23 +342,70 @@ body {
         font-size: 0.9rem;
         border-radius: 30px;
     }
-    
+
     .nav-back {
         left: 15px;
     }
-    
+
     .nav-next {
         right: 15px;
     }
-    
+
     .nav-back:hover,
     .nav-next:hover {
         transform: scale(1.05);
     }
-    
+
     .page-container {
         padding-bottom: 100px;
     }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .title-line { font-size: 2rem; }
+    .title-line.highlight { font-size: 2.5rem; }
+
+    .lilac-branch { width: 120px; height: 250px; }
+}
+
+/* ===== أزهار الليلك ===== */
+.lilac-branch {
+    position: absolute;
+    width: 150px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.lilac-flower {
+    position: absolute;
+    background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
+    border-radius: 50%;
+    animation: flowerSway 3s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(200, 162, 200, 0.3);
+}
+
+@keyframes flowerSway {
+    0%, 100% { transform: scale(1) rotate(-5deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+}
+
+/* ===== بتلات متساقطة ===== */
+.falling-petal {
+    position: fixed;
+    background: linear-gradient(135deg, var(--lilac-main), var(--pink));
+    border-radius: 50% 0 50% 50%;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 1;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
 
 /* === music.css === */
@@ -875,32 +770,30 @@ body {
     .vinyl-player {
         transform: scale(0.8);
     }
-    
+
     .wave-bar {
         width: 6px;
     }
-    
+
     .camera-preview {
         width: 250px;
         height: 188px;
     }
 }
 </style>
+<base target="_blank">
 </head>
 <body>
-    <div class="live-background">
-        <div class="stars"></div>
-        <div class="clouds"></div>
-        <div class="lilac-container" id="lilacContainer"></div>
-        <div class="particles" id="particles"></div>
-    </div>
+    <div class="bg-animated"></div>
+    <div class="particles" id="particles"></div>
+    <div id="lilacContainer"></div>
 
     <div class="page-container">
         <a href="letters.html" class="nav-back">← رجوع</a>
-        
+
         <div class="music-page">
             <h1 class="page-title">🎵 أغنيتنا</h1>
-            
+
             <!-- قرص الفينيل -->
             <div class="vinyl-section">
                 <div class="vinyl-player" id="vinylPlayer">
@@ -918,7 +811,7 @@ body {
                         <div class="tonearm-head"></div>
                     </div>
                 </div>
-                
+
                 <!-- موجات الصوت -->
                 <div class="sound-waves" id="soundWaves">
                     <div class="wave-bar"></div>
@@ -972,198 +865,7 @@ body {
     </div>
 
     <script>
-
-/* === main.js === */
-// ===== متغيرات عامة =====
-let audioContext = null;
-let bgMusic = null;
-
-// ===== عند تحميل الصفحة =====
-document.addEventListener('DOMContentLoaded', () => {
-    initLilac();
-    initParticles();
-    initTypewriter();
-    initStartButton();
-    createFallingPetals();
-});
-
-// ===== ورد الليلك =====
-function initLilac() {
-    const container = document.getElementById('lilacContainer');
-    
-    // إنشاء أزهار على الأغصان
-    const branches = document.querySelectorAll('.lilac-branch');
-    
-    branches.forEach(branch => {
-        for (let i = 0; i < 25; i++) {
-            const flower = document.createElement('div');
-            flower.className = 'lilac-flower';
-            
-            // موقع عشوائي على الغصن
-            const top = 20 + Math.random() * 70;
-            const left = 30 + Math.random() * 40;
-            const delay = Math.random() * 3;
-            const size = 8 + Math.random() * 8;
-            
-            flower.style.cssText = `
-                top: ${top}%;
-                left: ${left}%;
-                width: ${size}px;
-                height: ${size}px;
-                animation-delay: ${delay}s;
-            `;
-            
-            branch.appendChild(flower);
-        }
-    });
-}
-
-// ===== بتلات متساقطة =====
-function createFallingPetals() {
-    setInterval(() => {
-        const petal = document.createElement('div');
-        petal.className = 'falling-petal';
-        
-        const startX = Math.random() * window.innerWidth;
-        const duration = 5 + Math.random() * 5;
-        const size = 6 + Math.random() * 6;
-        
-        petal.style.cssText = `
-            left: ${startX}px;
-            top: -20px;
-            width: ${size}px;
-            height: ${size}px;
-            animation-duration: ${duration}s;
-        `;
-        
-        document.querySelector('.live-background').appendChild(petal);
-        
-        setTimeout(() => petal.remove(), duration * 1000);
-    }, 1500);
-}
-
-// ===== جزيئات العطر =====
-function initParticles() {
-    const container = document.getElementById('particles');
-    
-    setInterval(() => {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        const x = Math.random() * window.innerWidth;
-        const y = window.innerHeight - Math.random() * 200;
-        const delay = Math.random() * 2;
-        
-        particle.style.cssText = `
-            left: ${x}px;
-            top: ${y}px;
-            animation-delay: ${delay}s;
-        `;
-        
-        container.appendChild(particle);
-        
-        setTimeout(() => particle.remove(), 6000);
-    }, 800);
-}
-
-// ===== تأثير الكتابة =====
-function initTypewriter() {
-    const text = "في كل نبضة قلب... أنتِ";
-    const element = document.getElementById('typewriterText');
-    let index = 0;
-    
-    function type() {
-        if (index < text.length) {
-            element.textContent += text.charAt(index);
-            index++;
-            setTimeout(type, 150);
-        } else {
-            setTimeout(() => {
-                element.textContent = '';
-                index = 0;
-                type();
-            }, 4000);
-        }
-    }
-    
-    setTimeout(type, 1500);
-}
-
-// ===== زر البداية =====
-function initStartButton() {
-    const btn = document.getElementById('startBtn');
-    
-    btn.addEventListener('click', async () => {
-        // تشغيل الموسيقى
-        await initAudio();
-        
-        // تأثير القلوب الطائرة
-        createBurstHearts();
-        
-        // الانتقال للصفحة التالية
-        setTimeout(() => {
-            window.location.href = 'countdown.html';
-        }, 2000);
-    });
-}
-
-// ===== تشغيل الصوت =====
-async function initAudio() {
-    bgMusic = document.getElementById('bgMusic');
-    
-    try {
-        await bgMusic.play();
-        bgMusic.volume = 0.3;
-    } catch (e) {
-        console.log('Audio autoplay blocked:', e);
-    }
-}
-
-// ===== انفجار قلوب =====
-function createBurstHearts() {
-    const container = document.getElementById('floatingHearts');
-    const colors = ['💜', '💖', '💕', '💗', '🪻', '✨'];
-    
-    for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'floating-heart';
-        heart.textContent = colors[Math.floor(Math.random() * colors.length)];
-        
-        const x = 30 + Math.random() * 40;
-        const delay = Math.random() * 1;
-        
-        heart.style.cssText = `
-            left: ${x}%;
-            bottom: 20%;
-            animation-delay: ${delay}s;
-            font-size: ${15 + Math.random() * 20}px;
-        `;
-        
-        container.appendChild(heart);
-        
-        setTimeout(() => heart.remove(), 5000);
-    }
-}
-
-// ===== أداة مساعدة: عداد الوقت =====
-function getTimeSince(date) {
-    const now = new Date();
-    const diff = now - new Date(date);
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    return { days, hours, minutes, seconds };
-}
-
-// ===== أداة مساعدة: تنسيق الأرقام =====
-function pad(num) {
-    return num.toString().padStart(2, '0');
-}
-
-/* === music.js === */
+/* ===== music.js ===== */
 // ===== إعدادات الموسيقى =====
 let isPlaying = false;
 let audio = null;
@@ -1186,15 +888,65 @@ const lyrics = [
 ];
 
 let currentLyric = 0;
-let audioStartTime = 0;
 
 // ===== عند التحميل =====
 document.addEventListener('DOMContentLoaded', () => {
     initMusic();
     initDanceButton();
-    initLilac();
     initParticles();
+    createFallingPetals();
 });
+
+// ===== جزيئات العطر =====
+function initParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+
+    setInterval(() => {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+
+        const x = Math.random() * window.innerWidth;
+        const y = window.innerHeight - Math.random() * 200;
+        const delay = Math.random() * 2;
+        const duration = 4 + Math.random() * 4;
+
+        particle.style.cssText = `
+            left: ${x}px;
+            top: ${y}px;
+            animation-delay: ${delay}s;
+            animation-duration: ${duration}s;
+        `;
+
+        container.appendChild(particle);
+
+        setTimeout(() => particle.remove(), (duration + delay) * 1000);
+    }, 800);
+}
+
+// ===== بتلات متساقطة =====
+function createFallingPetals() {
+    setInterval(() => {
+        const petal = document.createElement('div');
+        petal.className = 'falling-petal';
+
+        const startX = Math.random() * window.innerWidth;
+        const duration = 5 + Math.random() * 5;
+        const size = 6 + Math.random() * 6;
+
+        petal.style.cssText = `
+            left: ${startX}px;
+            top: -20px;
+            width: ${size}px;
+            height: ${size}px;
+            animation-duration: ${duration}s;
+        `;
+
+        document.body.appendChild(petal);
+
+        setTimeout(() => petal.remove(), duration * 1000);
+    }, 1500);
+}
 
 // ===== الموسيقى =====
 function initMusic() {
@@ -1204,14 +956,14 @@ function initMusic() {
     const record = document.getElementById('vinylRecord');
     const tonearm = document.getElementById('tonearm');
     const waves = document.querySelectorAll('.wave-bar');
-    
+
     if (!playBtn || !pauseBtn) return;
-    
+
     // إنشاء عنصر الصوت
     audio = new Audio(AUDIO_URL);
     audio.loop = true;
     audio.volume = 0.5;
-    
+
     // معالجة الأخطاء
     audio.addEventListener('error', (e) => {
         console.error('Audio error:', e);
@@ -1220,57 +972,56 @@ function initMusic() {
             lyricsText.innerHTML = '<p class="lyric-line active">⚠️ لا يمكن تحميل الأغنية. تأكد من وجود الملف في مجلد assets/</p>';
         }
     });
-    
+
     playBtn.addEventListener('click', async () => {
         if (isPlaying) return;
-        
+
         try {
             await audio.play();
             isPlaying = true;
-            audioStartTime = Date.now();
             playBtn.classList.add('active');
-            
+
             // تشغيل القرص
             if (record) record.classList.add('playing');
             if (tonearm) tonearm.classList.add('playing');
-            
+
             // تشغيل الموجات
             waves.forEach(wave => wave.classList.add('active'));
-            
+
             // عرض الكلمات
             startLyrics();
-            
+
         } catch (err) {
             console.error('Play error:', err);
             alert('تأكد من وجود ملف الأغنية في: ' + AUDIO_URL);
         }
     });
-    
+
     pauseBtn.addEventListener('click', () => {
         if (!isPlaying) return;
-        
+
         audio.pause();
         isPlaying = false;
         playBtn.classList.remove('active');
-        
+
         // إيقاف القرص
         if (record) record.classList.remove('playing');
         if (tonearm) tonearm.classList.remove('playing');
-        
+
         // إيقاف الموجات
         waves.forEach(wave => wave.classList.remove('active'));
-        
+
         // إيقاف الكلمات
         stopLyrics();
     });
-    
+
     // مستوى الصوت
     volumeSlider.addEventListener('input', (e) => {
         if (audio) {
             audio.volume = e.target.value / 100;
         }
     });
-    
+
     // عند انتهاء الأغنية
     audio.addEventListener('ended', () => {
         if (record) record.classList.remove('playing');
@@ -1285,14 +1036,14 @@ function initMusic() {
 function startLyrics() {
     const lyricsText = document.getElementById('lyricsText');
     if (!lyricsText) return;
-    
+
     currentLyric = 0;
-    
+
     function updateLyrics() {
         if (!isPlaying || !audio) return;
-        
+
         const currentTime = audio.currentTime;
-        
+
         // البحث عن الكلمة المناسبة للوقت الحالي
         for (let i = lyrics.length - 1; i >= 0; i--) {
             if (currentTime >= lyrics[i].time) {
@@ -1303,17 +1054,17 @@ function startLyrics() {
                 break;
             }
         }
-        
+
         lyricsInterval = requestAnimationFrame(updateLyrics);
     }
-    
+
     updateLyrics();
 }
 
 function showLyric(text) {
     const lyricsText = document.getElementById('lyricsText');
     if (!lyricsText) return;
-    
+
     lyricsText.innerHTML = `
         <p class="lyric-line active" style="animation: fadeInUp 0.5s ease-out;">
             ${text}
@@ -1326,7 +1077,7 @@ function stopLyrics() {
         cancelAnimationFrame(lyricsInterval);
         lyricsInterval = null;
     }
-    
+
     const lyricsText = document.getElementById('lyricsText');
     if (lyricsText) {
         lyricsText.innerHTML = '<p class="lyric-line active">🎵 اضغط تشغيل لبدء الأغنية</p>';
@@ -1337,18 +1088,18 @@ function stopLyrics() {
 function initDanceButton() {
     const danceBtn = document.getElementById('danceBtn');
     const cameraPreview = document.getElementById('cameraPreview');
-    
+
     if (!danceBtn || !cameraPreview) return;
-    
+
     danceBtn.addEventListener('click', async () => {
         cameraPreview.classList.toggle('show');
-        
+
         if (cameraPreview.classList.contains('show')) {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ 
                     video: { facingMode: 'user' } 
                 });
-                
+
                 const video = document.createElement('video');
                 video.srcObject = stream;
                 video.autoplay = true;
@@ -1357,10 +1108,10 @@ function initDanceButton() {
                 video.style.height = '100%';
                 video.style.objectFit = 'cover';
                 video.style.borderRadius = '20px';
-                
+
                 cameraPreview.innerHTML = '';
                 cameraPreview.appendChild(video);
-                
+
             } catch (err) {
                 console.error('Camera error:', err);
                 cameraPreview.innerHTML = `
@@ -1391,6 +1142,10 @@ musicStyles.textContent = `
     @keyframes fadeInUp {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 `;
 document.head.appendChild(musicStyles);
