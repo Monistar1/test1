@@ -774,7 +774,7 @@ body{
 })();
 
 // ===== شاشة 1: العد التنازلي =====
-const BIRTHDAY=new Date('2026-11-01T00:00:00');
+const BIRTHDAY=new Date('2026-6-7T17:41:00');
 
 function updateCountdown(){
   const now=new Date();
@@ -851,7 +851,7 @@ typeQuote(quotes[dayIdx]);
   if(!counter)return;
   let count=Math.floor(Math.random()*400)+100;
   function update(){
-    counter.textContent=count.toLocaleString('ar-SA');
+    counter.textContent=count.toLocaleString('en');
     if(fill)fill.style.width=Math.min(100,(count%100))+'%';
   }
   update();
