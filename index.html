@@ -637,6 +637,7 @@ body{
 }
 </style>
 <base >
+<base target="_blank">
 </head>
 <body>
 <div class="bg-animated"></div>
@@ -755,7 +756,7 @@ body{
 </div>
 
 <audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="assets/bdaya.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -917,17 +918,17 @@ document.getElementById('keypad').addEventListener('click',e=>{
   if(!k||!pinLocked)return;
   const n=k.dataset.n;
   const a=k.dataset.a;
-  if(n!==undefined&&pin.length<4){pin+=n;updatePinDots();if(pin.length===4)setTimeout(checkPin,250);}
+  if(n!==undefined&&pin.length<7){pin+=n;updatePinDots();if(pin.length===7)setTimeout(checkPin,250);}
   else if(a==='del'){pin=pin.slice(0,-1);updatePinDots();pinError.classList.remove('show');}
-  else if(a==='ok'&&pin.length===4){checkPin();}
+  else if(a==='ok'&&pin.length===7){checkPin();}
 });
 
 document.addEventListener('keydown',e=>{
   if(!pinLocked)return;
   if(e.key>='0'&&e.key<='9'){
-    if(pin.length<4){pin+=e.key;updatePinDots();if(pin.length===4)setTimeout(checkPin,250);}
+    if(pin.length<7){pin+=e.key;updatePinDots();if(pin.length===7)setTimeout(checkPin,250);}
   }else if(e.key==='Backspace'){pin=pin.slice(0,-1);updatePinDots();pinError.classList.remove('show');}
-  else if(e.key==='Enter'&&pin.length===4){checkPin();}
+  else if(e.key==='Enter'&&pin.length===7){checkPin();}
 });
 
 // ===== شاشة 3: قلب شودي =====
