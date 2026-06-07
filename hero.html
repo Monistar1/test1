@@ -1153,7 +1153,7 @@ function updateTimeTogether() {
     const minutesEl = document.getElementById('togetherMinutes');
     const secondsEl = document.getElementById('togetherSeconds');
     
-    if (daysEl) daysEl.textContent = Math.max(0, days).toLocaleString('ar-SA');
+    if (daysEl) daysEl.textContent = Math.max(0, days).toLocaleString('en');
     if (hoursEl) hoursEl.textContent = pad(hours);
     if (minutesEl) minutesEl.textContent = pad(minutes);
     if (secondsEl) secondsEl.textContent = pad(seconds);
